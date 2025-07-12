@@ -5,27 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>temp stuff</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
     <script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@main/bundles/datastar.js"></script>
 </head>
 <body>
     <main class="container">
         <h1>hx what</h1>
         <section>
+            <div id="widget">
+                <button
+                data-on-click="@get('/update')"
+                data-indicator-fetching
+                >Click this widget</button>
+                <span data-show="$fetching">Not diseappearing after 1s??</span>
+            </div>
             <p>you will own nothing</p>
             <p>beyond this line</p>
             <p>and be happy</p>
             <hr>
-            <div id="widget">
-                <button
-                data-on-click="@get('/update')"
-                ></button>
-                <p>Your owner is <span id="replace_me">John Doe</span></p>
-            </div>
+            <p>Your owner is <span id="replace_me">John Doe</span></p>
             <hr>
             <p>you will own nothing</p>
             <p>above this line</p>
             <p>and be happy</p>
         </section>
+        <small><a href="https://github.com/1363V4/datastar-tmp">Source code</a></small>
     </main>
 </body>
 </html>

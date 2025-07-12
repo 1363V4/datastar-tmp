@@ -6,13 +6,11 @@ import asyncio
 
 
 app = Sanic(__name__)
+app.static('/static/', './static/')
+app.static('/', './templates/index.html', name="index")
 
 fake = Faker()
 
-@app.get("/")
-@app.ext.template("index.html")
-async def index(request):
-    return {}
 
 @app.get("/update")
 async def update(request):
