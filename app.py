@@ -2,8 +2,6 @@ from sanic import Sanic, html
 
 from faker import Faker
 
-import asyncio
-
 
 app = Sanic(__name__)
 app.static('/static/', './static/')
