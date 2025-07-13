@@ -1,4 +1,4 @@
-from sanic import Sanic, html
+from sanic import Sanic, html, text
 
 from faker import Faker
 
