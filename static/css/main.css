@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
 span {
     color: yellowgreen
+}
+
+section {
+    margin-block: 1rem;
+    padding: 1rem;
+    border: 1px solid yellowgreen;
+    border-radius: 1rem;
 }

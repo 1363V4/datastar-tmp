@@ -39,10 +39,14 @@ async def load_more(request, n):
         return html("", status=204)
     if n > 7:
         return html("", status=204)
+    if n == 7:
+        button = '''<button disabled>Max items reached</button>''' 
+    else:
+        button = f'''<button data-on-click="@get('/load_more/{n+1}')">Load more</button>''' 
     raw_html = f'''
 <div id="list">
     {"".join(f"<div>Item {i}</div>" for i in range(1, n + 1))}
-    <button data-on-click="@get('/load_more/{n+1}')">Load more</button>
+    {button}
 </div>
 '''
     return html(raw_html)
