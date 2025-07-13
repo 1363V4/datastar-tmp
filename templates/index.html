@@ -12,6 +12,7 @@
 <body>
     <main class="container">
         <h1>temp stuff</h1>
+        <small><a href="https://github.com/1363V4/datastar-tmp">Source code</a></small>
         <section>
             <h2>bubble example</h2>
             <style>
@@ -55,12 +56,87 @@
         </section>
         <section>
             <h2>bulk update</h2>
+            <style>
+                td {
+                    transition: background-color 3s linear;
+                }
+
+                td[active] {
+                    background-color: green;
+                }
+                
+                td[inactive] {
+                    background-color: red;
+                }
+                </style>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tr id="row1">
+                    <td>John</td>
+                    <td id="row1-status" active>Active</td>
+                </tr>
+            </table>
+            <div>
+                <button data-on-click="@put('/activate')">Activate</button>
+                <button data-on-click="@put('/deactivate')">Deactivate</button>
+            </div>
+            <hr>
+            <p>code looks like this</p>
+            <pre><code>
+@app.put(&quot;/deactivate&quot;)
+async def deactivate(request):
+    return html(&#39;&#39;&#39;
+&lt;tr id=&quot;row1&quot;&gt;
+    &lt;td&gt;John&lt;/td&gt;
+    &lt;td id=&quot;row1-status&quot; inactive&gt;Inactive&lt;/td&gt;
+&lt;/tr&gt;
+&#39;&#39;&#39;)
+            </code></pre>
+            <p>with a transition on CSS but... does not work?!</p>
+            <p>weird!! i put IDs on the right place!! maybe because i return text/html??</p>
         </section>
         <section>
             <h2>load list items</h2>
+            <div id="list">
+                <div>Item 1</div>
+                <button data-on-click="@get('/load_more/2')">Load more</button>
+            </div>
+            <hr>
+            <p>I think it is worth mentioning that you should not do validation with signals only</p>
+            <p>as they can be modified by the user</p>
+            <p>so... two solutions</p>
+            <p>- track user state on the backend</p>
+            <p>- send a new button with a new route ("@get('/load_more/12')")</p>
+            <p>i went with the second approach</p>
         </section>
         <section>
             <h2>redirect from the backend</h2>
+            <button data-on-click="@get('/redirect')">
+                Click to be redirected from the backend
+            </button>
+            <div id="indicator"></div>
+            <hr>
+            <p>with data-on-interval, we can have a nice decrementing signal</p>
+            <p>also, why send two events when JS can do "execute X after Y seconds"?</p>
+            <p>but you have to choose, either use</p>
+            <code>setTimeout(() => window.location.href = 'https://www.google.fr', 3000)</code>
+            <p>and you loose the decrementing counter, as we can't modify the signal from js</p>
+            <p>OR put the logic inside the returned element</p>
+            <pre><code>
+&lt;div id=&quot;indicator&quot;
+data-signals-seconds=3
+data-on-interval=&quot;
+$seconds -= 1;
+$seconds = Math.max($seconds, 0);
+$seconds == 0 ? setTimeout(() => window.location.href = &#39;https://www.google.fr&#39;) : null
+&quot;&gt;
+            </code></pre>
+            <p>also no idea but the history is messed up if you're redirected and press back</p>
         </section>
     </main>
 </body>
