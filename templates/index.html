@@ -11,26 +11,57 @@
 </head>
 <body>
     <main class="container">
-        <h1>hx what</h1>
+        <h1>temp stuff</h1>
         <section>
-            <div id="widget">
-                <button
-                data-on-pointerdown="@get('/update')"
-                data-indicator-fetching
-                >Click this widget</button>
-                <span data-show="$fetching">Not diseappearing after 1s??</span>
+            <h2>bubble example</h2>
+            <style>
+                #button-container {
+                    display: grid;
+                    grid-template-columns: repeat(6, 10rem);
+                    gap: .1rem;
+                    pointer-events: none;
+                    button {
+                        color: black;
+                        pointer-events: all;
+                        background: #A3781A;
+                        &[gray] {
+                            background: #8796CF;
+                        }
+                    }
+                }
+            </style>
+            <p>You pressed: <span data-signals-pressed="" data-text="$pressed"></span></p>
+            <div
+            id="button-container"
+            data-on-click="$pressed = evt.target.id"
+            >
+                <button id="KEY ELSE" gray>KEY ELSE</button>
+                <button id="CM">CM</button>
+                <button id="OM">OM</button>
+                <button id="FETCH">FETCH</button>
+                <button id="SET">SET</button>
+                <button id="EXEC">EXEC</button>
+                <button id="TEST ALARM" gray>TEST ALARM</button>
+                <button id="3">3</button>
+                <button id="2">2</button>
+                <button id="1">1</button>
+                <button id="ENTER">ENTER</button>
+                <button id="CLEAR">CLEAR</button>
             </div>
-            <p>you will own nothing</p>
-            <p>beyond this line</p>
-            <p>and be happy</p>
             <hr>
-            <p>Your owner is <span id="replace_me">John Doe</span></p>
-            <hr>
-            <p>you will own nothing</p>
-            <p>above this line</p>
-            <p>and be happy</p>
+            <p>You can set up the click behavior on the parent element and events will bubble up</p>
+            <p>disable pointer events on the parent and re-enable it on its children with CSS</p>
+            <small><a href="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fskyfortress.studio%2Fwp-content%2Fuploads%2F2019%2F01%2F2k1suitcontrol.jpg&f=1&nofb=1&ipt=5a80191945bec0281b08b83c56612394cc171fc6ede5948c6466cff2224e9b3e">reference</a></small>
         </section>
-        <small><a href="https://github.com/1363V4/datastar-tmp">Source code</a></small>
+        <section>
+            <h2>bulk update</h2>
+        </section>
+        <section>
+            <h2>load list items</h2>
+        </section>
+        <section>
+            <h2>redirect from the backend</h2>
+        </section>
     </main>
 </body>
 </html>
