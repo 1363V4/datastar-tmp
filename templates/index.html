@@ -7,142 +7,22 @@
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
-    <script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@main/bundles/datastar.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@1.0.0-RC.6/bundles/datastar.js"></script>
 </head>
 <body>
     <main class="container">
-        <h1>temp stuff</h1>
+        <h1>i code your website live!</h1>
+        <h2>https://tmp.leg.ovh/  --  make your request!<h2>
         <small><a href="https://github.com/1363V4/datastar-tmp">Source code</a></small>
         <section>
-            <h2>bubble example</h2>
-            <style>
-                #button-container {
-                    pointer-events: none;
-                    display: grid;
-                    grid-template-columns: repeat(6, 6rem);
-                    row-gap: .8rem;
-                    column-gap: .1rem;
-                    transform: skewY(-1deg);
-                    font-weight: bold;
-                    button {
-                        pointer-events: all;
-                        font-family: 'IBM Plex Mono', monospace;
-                        color: black;
-                        background: linear-gradient(0deg, #c39c47, #A3781A);
-                        height: 9rem;
-                        font-weight: bold;
-                        &[gray] {
-                            background: linear-gradient(0deg, #a4adcd, #8796CF);
-                        }
-                    }
-                }
-            </style>
-            <p>You pressed: <span data-signals-pressed="" data-text="$pressed"></span></p>
-            <div
-            id="button-container"
-            data-on-click="$pressed = evt.target.id"
-            >
-                <button id="KEY ELSE" gray>KEY<br>ELSE</button>
-                <button id="CM">CM</button>
-                <button id="OM">OM</button>
-                <button id="FETCH">FETCH</button>
-                <button id="SET">SET</button>
-                <button id="EXEC">EXEC</button>
-                <button id="TEST ALARM" gray>TEST<br>ALARM</button>
-                <button id="3">3</button>
-                <button id="2">2</button>
-                <button id="1">1</button>
-                <button id="ENTER">ENTER</button>
-                <button id="CLEAR">CLEAR</button>
-            </div>
-            <hr>
-            <p>You can set up the click behavior on the parent element and events will bubble up</p>
-            <p>disable pointer events on the parent and re-enable it on its children with CSS</p>
-            <small><a href="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fskyfortress.studio%2Fwp-content%2Fuploads%2F2019%2F01%2F2k1suitcontrol.jpg&f=1&nofb=1&ipt=5a80191945bec0281b08b83c56612394cc171fc6ede5948c6466cff2224e9b3e">reference</a></small>
+            <h2>blinking light's website?</h2>
+            <em>maybe, realtime statistics ? some graph with server stats ? load avg, free memory etc. ?</em>
+            <span>working on this right now!</span>
+            <button data-on:click="@get('/blinking')">lessgo</button>
         </section>
         <section>
-            <h2>bulk update</h2>
-            <style>
-                td {
-                    transition: background 3s linear;
-                }
-
-                td[active] {
-                    background: green;
-                }
-                
-                td[inactive] {
-                    background: red;
-                }
-                </style>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tr id="row1">
-                    <td>John</td>
-                    <td id="row1-status" active>Active</td>
-                </tr>
-            </table>
-            <div>
-                <button data-on-click="@put('/activate')">Activate</button>
-                <button data-on-click="@put('/deactivate')">Deactivate</button>
-            </div>
-            <hr>
-            <p>code looks like this</p>
-            <pre><code>
-@app.put(&quot;/deactivate&quot;)
-async def deactivate(request):
-    return html(&#39;&#39;&#39;
-&lt;tr id=&quot;row1&quot;&gt;
-    &lt;td&gt;John&lt;/td&gt;
-    &lt;td id=&quot;row1-status&quot; inactive&gt;Inactive&lt;/td&gt;
-&lt;/tr&gt;
-&#39;&#39;&#39;)
-            </code></pre>
-            <p>with a transition on CSS but... does not work?!</p>
-            <p>weird!! i put IDs on the right place!! maybe because i return text/html??</p>
-        </section>
-        <section>
-            <h2>load list items</h2>
-            <div id="list">
-                <div>Item 1</div>
-                <button data-on-click="@get('/load_more/2')">Load more</button>
-            </div>
-            <hr>
-            <p>I think it is worth mentioning that you should not do validation with signals only</p>
-            <p>as they can be modified by the user</p>
-            <p>so... two solutions</p>
-            <p>- track user state on the backend</p>
-            <p>- send a new button with a new route ("@get('/load_more/12')")</p>
-            <p>i went with the second approach</p>
-        </section>
-        <section>
-            <h2>redirect from the backend</h2>
-            <button data-on-click="@get('/redirect')">
-                Click to be redirected from the backend
-            </button>
-            <div id="indicator"></div>
-            <hr>
-            <p>with data-on-interval, we can have a nice decrementing signal</p>
-            <p>also, why send two events when JS can do "execute X after Y seconds"?</p>
-            <p>but you have to choose, either use</p>
-            <code>setTimeout(() => window.location.href = 'https://www.google.fr', 3000)</code>
-            <p>and you loose the decrementing counter, as we can't modify the signal from js</p>
-            <p>OR put the logic inside the returned element</p>
-            <pre><code>
-&lt;div id=&quot;indicator&quot;
-data-signals-seconds=3
-data-on-interval=&quot;
-$seconds -= 1;
-$seconds = Math.max($seconds, 0);
-$seconds == 0 ? setTimeout(() => window.location.href = &#39;https://www.google.fr&#39;) : null
-&quot;&gt;
-            </code></pre>
-            <p>also no idea but the history is messed up if you're redirected and press back</p>
+            <h2>next?</h2>
+            <span>ask in chat!</span>
         </section>
     </main>
 </body>

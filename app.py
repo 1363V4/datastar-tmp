@@ -1,65 +1,58 @@
 from sanic import Sanic, html
+from datastar_py.sanic import datastar_response, ServerSentEventGenerator as SSE
+
+import asyncio
+import logging
+from uuid import uuid4
 
 from faker import Faker
+import psutil
 
 
 app = Sanic(__name__)
 app.static('/static/', './static/')
 app.static('/', './templates/index.html', name="index")
+app.update_config({'RESPONSE_TIMEOUT': 60*5})
 
 fake = Faker()
 
+logging.basicConfig(filename='perso.log', encoding='utf-8', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-@app.put("/activate")
-async def activate(request):
-    return html('''
-<tr id="row1">
-    <td>John</td>
-    <td id="row1-status" active>Active</td>
-</tr>
-''')
+async def cleanup_old_rooms():
+    while True:
+        load_avg = psutil.getloadavg()
+        memory = psutil.virtual_memory()
+        app.ctx.db.update({
+            'load_avg': str(load_avg),
+            'mem_tot': f"{memory.total / (1024**2):.2f} MB",
+            'mem_free':f"{memory.available / (1024**2):.2f} MB",
+        })
+        await asyncio.sleep(1)
 
-@app.put("/deactivate")
-async def deactivate(request):
-    return html('''
-<tr id="row1">
-    <td>John</td>
-    <td id="row1-status" inactive>Inactive</td>
-</tr>
-''')
+app.add_task(cleanup_old_rooms)
 
-@app.get("/load_more/<n>")
-async def load_more(request, n):
-    '''i think there's something in sanic for checking n'''
-    try:
-        n = int(n)
-    except ValueError:
-        return html("", status=204)
-    if n > 7:
-        return html("", status=204)
-    if n == 7:
-        button = '''<button disabled>Max items reached</button>''' 
-    else:
-        button = f'''<button data-on-click="@get('/load_more/{n+1}')">Load more</button>''' 
-    raw_html = f'''
-<div id="list">
-    {"".join(f"<div>Item {i}</div>" for i in range(1, n + 1))}
-    {button}
-</div>
+@app.before_server_start
+async def open_connections(app):
+    app.ctx.db = {}
+
+@app.on_response
+async def cookie(request, response):
+    if not request.cookies.get("user_id"):
+        user_id = uuid4().hex
+
+@app.get("/blinking")
+@datastar_response
+async def blinking(request):
+    while True:
+        html = f'''
+<body>
+<section>
+    <p>Load average: <span>{app.ctx.db['load_avg']}</span></p>
+    <p>Free mem: <span>{app.ctx.db['mem_free']}</span></p>
+    <p>Total mem: <span>{app.ctx.db['mem_tot']}</span></p>
+</section>
+</body>
 '''
-    return html(raw_html)
-
-@app.get("/redirect")
-async def redirect(request):
-    return html('''
-<div id="indicator" 
-data-signals-seconds=3
-data-on-interval="
-$seconds -= 1;
-$seconds = Math.max($seconds, 0);
-$seconds == 0 ? setTimeout(() => window.location.href = 'https://www.google.fr') : null
-">
-Redirecting in 
-<span data-text="$seconds"></span>
-</div>
-''')
+        yield SSE.patch_elements(html)
+        await asyncio.sleep(1)
