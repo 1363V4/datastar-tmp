@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
 
+h1 {
+	color: lime;
+	padding-top: 3rem
+}
+
+body {
+	color: lightgrey;
+}
+
 span {
     color: yellowgreen
 }

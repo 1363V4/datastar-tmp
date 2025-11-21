@@ -1,40 +1,10 @@
-INFO:sanic.server:Starting worker [6283]
-ERROR:sanic.error:Exception occurred in one of response middleware handlers
-Traceback (most recent call last):
-  File "/home/le/tmp/.venv/lib/python3.12/site-packages/sanic/request/types.py", line 402, in respond
-    response = await self.app._run_response_middleware(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "_run_response_middleware", line 17, in _run_response_middleware
-    from asyncio.futures import Future
-                            ^^^^^^^^^^^
-  File "/home/le/tmp/app.py", line 41, in cookie
-    user_id = uuid4().hex
-              ^^^^^
-NameError: name 'uuid4' is not defined
-ERROR:sanic.error:Exception occurred in one of response middleware handlers
-Traceback (most recent call last):
-  File "/home/le/tmp/.venv/lib/python3.12/site-packages/sanic/request/types.py", line 402, in respond
-    response = await self.app._run_response_middleware(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "_run_response_middleware", line 17, in _run_response_middleware
-    from asyncio.futures import Future
-                            ^^^^^^^^^^^
-  File "/home/le/tmp/app.py", line 41, in cookie
-    user_id = uuid4().hex
-              ^^^^^
-NameError: name 'uuid4' is not defined
-INFO:sanic.server:Stopping worker [6283]
-INFO:sanic.server:Worker complete [6283]
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() running at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:247> wait_for=<Future pending cb=[Task.task_wakeup()]>>
-INFO:sanic.server:Starting worker [6287]
-INFO:sanic.server:Stopping worker [6287]
-INFO:sanic.server:Starting worker [6295]
-INFO:sanic.server:Worker complete [6287]
-ERROR:asyncio:Task was destroyed but it is pending!
-task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() running at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:247> wait_for=<Future pending cb=[Task.task_wakeup()]>>
-INFO:sanic.server:Stopping worker [6295]
-INFO:sanic.server:Starting worker [6299]
-INFO:sanic.server:Worker complete [6295]
+INFO:sanic.server:Stopping worker [6633]
+INFO:sanic.server:Worker complete [6633]
 ERROR:asyncio:Task was destroyed but it is pending!
 task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() done, defined at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:205> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:sanic.server:Starting worker [6639]
+INFO:sanic.server:Stopping worker [6639]
+INFO:sanic.server:Worker complete [6639]
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() done, defined at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:205> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:sanic.server:Starting worker [6642]

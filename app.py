@@ -12,14 +12,14 @@ import psutil
 app = Sanic(__name__)
 app.static('/static/', './static/')
 app.static('/', './templates/index.html', name="index")
-app.update_config({'RESPONSE_TIMEOUT': 60*5})
+# app.update_config({'RESPONSE_TIMEOUT': 60*5})
 
 fake = Faker()
 
 logging.basicConfig(filename='perso.log', encoding='utf-8', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-async def cleanup_old_rooms():
+async def wassup_psutil():
     while True:
         load_avg = psutil.getloadavg()
         memory = psutil.virtual_memory()
@@ -30,11 +30,11 @@ async def cleanup_old_rooms():
         })
         await asyncio.sleep(1)
 
-app.add_task(cleanup_old_rooms)
+app.add_task(wassup_psutil)
 
 @app.before_server_start
 async def open_connections(app):
-    app.ctx.db = {}
+    app.ctx.db = {'bot': "nope"}
 
 @app.on_response
 async def cookie(request, response):
@@ -56,3 +56,7 @@ async def blinking(request):
 '''
         yield SSE.patch_elements(html)
         await asyncio.sleep(1)
+
+@app.post("/bot")
+async def bot(request):
+    app.ctx.db['bot'] = "OMG"
