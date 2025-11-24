@@ -8,3 +8,29 @@ INFO:sanic.server:Worker complete [6639]
 ERROR:asyncio:Task was destroyed but it is pending!
 task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() done, defined at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:205> wait_for=<Future pending cb=[Task.task_wakeup()]>>
 INFO:sanic.server:Starting worker [6642]
+INFO:sanic.server:Stopping worker [6642]
+INFO:sanic.server:Starting worker [7445]
+INFO:sanic.server:Worker complete [6642]
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() running at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:247> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:sanic.server:Stopping worker [7445]
+INFO:sanic.server:Worker complete [7445]
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() done, defined at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:205> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:sanic.server:Starting worker [7466]
+INFO:sanic.server:Stopping worker [7466]
+INFO:sanic.server:Worker complete [7466]
+ERROR:asyncio:Task was destroyed but it is pending!
+task: <Task pending name='Task-5' coro=<SignalRouter._dispatch() running at /home/le/tmp/.venv/lib/python3.12/site-packages/sanic/signals.py:247> wait_for=<Future pending cb=[Task.task_wakeup()]>>
+INFO:sanic.server:Starting worker [17146]
+ERROR:sanic.error:Exception occurred while handling uri: 'http://tmp.leg.ovh/blinking?datastar=%7B%7D'
+Traceback (most recent call last):
+  File "handle_request", line 100, in handle_request
+    except ImportError:
+                        
+  File "/home/le/tmp/.venv/lib/python3.12/site-packages/datastar_py/sanic.py", line 74, in wrapper
+    async for event in r:
+  File "/home/le/tmp/app.py", line 51, in blinking
+    <p>Load average: <span>{app.ctx.db['load_avg']}</span></p>
+                            ~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'load_avg'

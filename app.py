@@ -28,9 +28,9 @@ async def wassup_psutil():
             'mem_tot': f"{memory.total / (1024**2):.2f} MB",
             'mem_free':f"{memory.available / (1024**2):.2f} MB",
         })
-        await asyncio.sleep(1)
+        await asyncio.sleep(5)
 
-app.add_task(wassup_psutil)
+# app.add_task(wassup_psutil)
 
 @app.before_server_start
 async def open_connections(app):
@@ -55,7 +55,7 @@ async def blinking(request):
 </body>
 '''
         yield SSE.patch_elements(html)
-        await asyncio.sleep(1)
+        await asyncio.sleep(5)
 
 @app.post("/bot")
 async def bot(request):
